@@ -9,7 +9,6 @@ class Move(Enum):
 class GameModel:
     def __init__(self):
         self.points: int = 0
-        self.choices = list(Move)
         self.history: dict[int, Move] = {}
 
     def reset(self):

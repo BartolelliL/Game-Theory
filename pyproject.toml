@@ -2,6 +2,10 @@
 name = "game-theory"
 version = "0.1.0"
 requires-python = ">=3.12"
-dependencies = [
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "mypy>=2.4.1",
     "ruff>=0.17.3",
 ]

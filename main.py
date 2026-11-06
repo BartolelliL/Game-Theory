@@ -1,6 +1,6 @@
 # Modern version of: Game Theory Simulator
-from behaviour import assign_points, declare_winner
-from schemas.bots import AlwaysCooperate, AlwaysDefect, BotPlayer, RandomBot, TitForTat
+from behaviour import assign_points, boot, declare_winner, display_game_chart
+from schemas.bots import BotPlayer
 from schemas.player import Player
 
 
@@ -11,19 +11,15 @@ class Game:
         self.bot: BotPlayer
 
     def run(
-            self,
-            chosen_bot: BotPlayer,
-            maximum_rounds: int = 20,
-    ):
-        # Initialize attrs
-        self.bot = chosen_bot
+        self,
+        menu_settings: list,
+    ) -> None:
+        self.bot = menu_settings[1]
         self.round_number = 0
         self.player.reset()
         self.bot.reset()
 
-        print(f"Opponent: {self.bot.name}\n")
-
-        while self.round_number < maximum_rounds:
+        while self.round_number < menu_settings[2]:
             print(f"\n--- Round number: {self.round_number + 1} ---")
 
             # Get Player and Bot choices
@@ -40,16 +36,19 @@ class Game:
             print(f"Bot's points: {self.bot.points}\n")
             self.round_number += 1
 
-        declare_winner(self.player.points, self.bot.points)
         print("Game Over.\n")
-        print(f"Player points: {self.player.history}\n")
-        print(f"Bot points: {self.bot.history}\n")
-
+        display_game_chart(self.player.history, self.bot.history, self.bot.name)
+        declare_winner(self.player.points, self.bot.points)
 
 
 if __name__ == "__main__":
     game = Game()
-    game.run(RandomBot())
-    game.run(TitForTat())
-    game.run(AlwaysCooperate())
-    game.run(AlwaysDefect())
+    try:
+        settings = boot(is_first_round=True)
+        while settings != "exit":
+            game.run(settings)
+            settings = boot(is_first_round=False)
+    except EOFError as err:
+        print(f"An error has occurred: {err}")
+    except KeyboardInterrupt:
+        print("\nBye!")
