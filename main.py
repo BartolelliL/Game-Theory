@@ -6,8 +6,8 @@ from schemas.player import Player
 
 class Game:
     def __init__(self):
-        self.round_number: int = 0
-        self.player: Player = Player()
+        self.round_number = 0
+        self.player = Player()
         self.bot: BotPlayer
 
     def run(

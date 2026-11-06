@@ -1,5 +1,5 @@
-from random import randint
 from collections.abc import Mapping
+from random import randint
 
 from schemas.bots import BOTS_MENU
 from schemas.schemas import Move
@@ -30,13 +30,11 @@ def boot(is_first_round: bool) -> list | str:
         if user_choice == "exit":
             return "exit"
 
-        user_choice = int(user_choice.strip())
-        cls = BOTS_MENU.get(user_choice)
-        if cls is None:
+        bot_class = BOTS_MENU.get(user_choice)
+        if bot_class is None:
             print("Invalid number provided.")
             continue
-        menu_settings.append(cls())
-
+        menu_settings.append(bot_class())
 
         user_choice = (
             input(
@@ -48,7 +46,6 @@ def boot(is_first_round: bool) -> list | str:
 
         if user_choice != "Random":
             try:
-                user_choice = int(user_choice.strip())
                 if int(user_choice) >= 3:
                     menu_settings.append(int(user_choice))
                 else:
@@ -64,12 +61,7 @@ def boot(is_first_round: bool) -> list | str:
 
 
 def assign_points(player_choice_value: Move, bot_choice_value: Move) -> tuple[int, int]:
-    """
-    First is player, Second is bot.
-    :param player_choice_value:
-    :param bot_choice_value:
-    :return:
-    """
+    # First is player, Second is bot.
 
     if player_choice_value == Move.COOPERATE and bot_choice_value == Move.COOPERATE:
         return 3, 3
@@ -126,4 +118,3 @@ def display_game_chart(
                 bot_total,
             )
         )
-

@@ -8,8 +8,8 @@ class Move(Enum):
 
 class GameModel:
     def __init__(self):
-        self.points: int = 0
-        self.history: dict[int, Move] = {}
+        self.points = 0
+        self.history = {}
 
     def reset(self):
         self.points = 0
