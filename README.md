@@ -1,4 +1,4 @@
-# Game Theory Simulator
+# Prisoner's Dilemma
 A terminal-based repeated game where a human player chooses to cooperate or
 defect against a bot. Each round, both choices are scored, totals accumulate,
 and the game reports the winner after the configured number of rounds.
